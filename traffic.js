@@ -46,7 +46,7 @@ export default class Street {
 
     getBusyTime(rushPeaks, rushWidth, resolution = 1000) {
         const step = 24 / resolution;
-        const probabilities = Array.from({ length: resolution + 1 }, (_, i) => {
+        const prob = Array.from({ length: resolution + 1 }, (_, i) => {
             const x = i * step;
             return rushPeaks.reduce((sum, peak) => {
                 const distance = x - peak;
@@ -54,17 +54,17 @@ export default class Street {
             }, 0);
         });
 
-        const total = probabilities.reduce((a, b) => a + b, 0);
-        const normalizedProbabilities = probabilities.map(p => p / total);
+        const total = prob.reduce((a, b) => a + b, 0);
+        const normalizedProb = prob.map(p => p / total);
 
         const cumulative = [];
-        normalizedProbabilities.reduce((sum, p, i) => {
+        normalizedProb.reduce((sum, p, i) => {
             cumulative[i] = sum + p;
             return cumulative[i];
         }, 0);
 
-        const randomValue = Math.random();
-        const index = cumulative.findIndex(cdf => randomValue <= cdf);
+        const limit = Math.random();
+        const index = cumulative.findIndex(cdf => limit <= cdf);
 
         return index * step;
     }
