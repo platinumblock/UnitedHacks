@@ -1,7 +1,7 @@
 const NUM_BUSY_SAMPLES = 1000;
 
 
-class Street {
+export default class Street {
 
     /**
      * Constructs a new {@code Street} object representing environmental conditions that impact
@@ -23,6 +23,8 @@ class Street {
                 sidewalksSeparated,
                 numBikeLanes,
                 bikeLanesProtected,
+                maxPeople,
+                maxCars,
                 busyTimes)
     {
         this.speedLimit = speedLimit;
@@ -32,7 +34,9 @@ class Street {
         this.sidewalksSeparated = sidewalksSeparated;
         this.numBikeLanes = numBikeLanes;
         this.bikeLanesProtected = bikeLanesProtected;
-        this.busyTimes = busyTimes
+        this.maxPeople = maxPeople;
+        this.maxCars = maxCars;
+        this.busyTimes = busyTimes;
 
         this.busyHistogram = this.buildBusyHistogram();
 
@@ -123,14 +127,21 @@ class Street {
 
 
     /**
+     * Removes a trransit stop from this street.
+     */
+    deleteTransitStop() {
+        this.numTranitStops = Math.max(0, this.numTransitStops--);
+    }
+
+
+    /**
      * Number of pedestrians at the current time (per hour) for the street.
      *
-     * @param time       the current time (a Date object).
-     * @param maxPeople  the maximum pedestrian capacity for the street.
+     * @param time  the current time (a Date object).
      *
      * @return the number of pedestrians currently on the street.
      */
-    getPedestrians(time, maxPeople) {
+    getPedestrians(time) {
         let percentBusy = this.getPercentBusy(time);
         let speedPenalty = 30.0 / this.speedLimit;
         let lanesPenalty = 3.0 / this.numLanes;
@@ -140,19 +151,32 @@ class Street {
 
         let penalties = speedPenalty * lanesPenalty;
         let bonuses = oneWayBonus * sidewalksBonus * bikeLanesBonus;
-        return Math.round(3 * maxPeople * percentBusy * penalties * bonuses);
+        return Math.round(3 * this.maxPeople * percentBusy * penalties * bonuses);
+    }
+
+
+    getPedestriansStr(time) {
+        let pedestrians = this.getPedestrians(time);
+        if (pedestrians >= 1000) {
+            return "High";
+        }
+        else if (pedestrians >= 500) {
+            return "Medium";
+        }
+        else {
+            return "Low";
+        }
     }
 
 
     /**
      * Number of cars at the current time (per hour) for the street.
      *
-     * @param time     the current time (a Date object).
-     * @param maxCars  the maximum car capacity for the street.
+     * @param time  the current time (a Date object).
      *
      * @return the number of cars currently on the street.
      */
-    getCars(time, maxCars) {
+    getCars(time) {
         let percentBusy = this.getPercentBusy(time);
         let speedBonus = this.speedLimit / 30.0;
         let lanesBonus = this.numLanes / 3.0;
@@ -162,31 +186,67 @@ class Street {
 
         let penalties = oneWayPenalty * sidewalksPenalty * bikeLanesPenalty;
         let bonuses = speedBonus * lanesBonus;
-        return Math.round(3 * maxCars * percentBusy * penalties * bonuses);
+        return Math.round(3 * this.maxCars * percentBusy * penalties * bonuses);
+    }
+
+
+    getCarsStr(time) {
+        let cars = this.getCars(time);
+        if (cars >= 1000) {
+            return "High";
+        }
+        else if (cars >= 500) {
+            return "Medium";
+        }
+        else {
+            return "Low";
+        }
     }
 
 
     /**
-     * The quality of the street between 0 and 1.
+     * The accessibility of the street between 0 and 1.
      *
-     * Pedetrians and transit increase street quality, cars decrease street quality.
+     * @param time  the current time (a Date object).
      *
-     * @param time       the current time (a Date object).
-     * @param maxPeople  the maximum pedestrian capacity for the street.
-     * @param maxCars    the maximum car capacity for the street.
-     *
-     * @return the street quality.
+     * @return the street accesibility.
      */
-    getStreetQuality(time, maxPeople, maxCars) {
-        let pedestrians = this.getPedestrians(time, maxPeople);
-        let cars = this.getCars(time, maxCars);
+    getAccessibility(time) {
+        return 0.1 + 100 * this.numTransitStops / this.getCars(time);
+    }
 
-        return pedestrians / cars * (0.01 + 3 * this.numTransitStops / this.numLanes);
+
+    getAccessibilityStars(time) {
+        let accessibility = Math.max(0.0, Math.min(1.0, this.getAccessibility(time)));
+        return Math.round(5 * accessibility);
+    }
+
+
+    /**
+     * The transit importance of the street between 0 and 1.
+     *
+     * @param time  the current time (a Date object).
+     *
+     * @return the transit importance.
+     */
+    getTransitImportance(time) {
+        let traffic = this.getCars(time) + this.getPedestrians(time);
+        let maxTraffic = this.maxCars + this.maxPeople;
+        return 10 * traffic / maxTraffic;
+    }
+
+
+    getTransitImportanceStr(time) {
+        let transitImportance = this.getTransitImportance(time);
+        if (transitImportance >= 0.70) {
+            return "High";
+        }
+        else if (transitImportance >= 0.50) {
+            return "Medium";
+        }
+        else {
+            return "Low";
+        }
     }
 
 }
-
-
-let elCamino = new Street(35, 6, false, 2, false, 2, true, [8, 12, 18]);
-let time = new Date(Date.now());
-console.log(elCamino.getStreetQuality(time, 1000, 10000));
