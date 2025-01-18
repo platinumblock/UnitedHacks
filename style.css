@@ -1,0 +1,196 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap');
+body{
+    font-family: "Instrument Sans", serif;
+    overflow:hidden;
+    background:rgb(250,250,250);
+}
+#pitch{
+    position:absolute;
+    left:10%;
+    top:21%;
+    font-weight:700;
+    font-size:80px;
+    background: linear-gradient(to right, rgb(46, 88, 255), #00bfff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+#pitch2{
+    position:absolute;
+    left:10%;
+    top:37%;
+    width:30%;
+    font-size:20px;
+    color:rgb(50, 50, 50);
+}
+#subpitch{
+    position:absolute;
+    left:10%;
+    top: 54%;
+    font-size:20px;
+    width:30%;
+    color:rgb(50,50,50);
+}
+#explore{
+    text-decoration:none;
+    color:white;
+    background: linear-gradient(to right, rgb(46, 88, 255), #00bfff);
+    position:absolute;
+    left:10%;
+    top:70%;
+    width:14%;
+    height:10%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:22px;
+    border-radius:30px;
+    transition:0.1s all;
+    font-weight:500;
+}
+#explore:hover{
+    cursor:pointer;
+    transform:scale(1.05);
+}
+#image{
+    width:35%;
+    position:absolute;
+    left:50%;
+    top:13%;
+    animation:float 4s infinite;
+}
+@keyframes float{
+    0%{transform:translateY(0px);}
+    50%{transform:translateY(-25px);}
+    100%{transform:translateY(0px);}
+}
+#logo{
+    position:absolute;
+    left:5%;
+    top:7%;
+    width:3%;
+}
+#title{
+    position:absolute;
+    left:9%;
+    top:7%;
+    font-weight:500;
+    font-size:30px;
+}
+#maplink{
+    position:absolute;
+    top:9.5%;
+    left:87%;
+    font-size:20px;
+    color:rgb(50,50,50);
+    text-decoration:none;
+}
+.verticalline{
+    position:absolute;
+    top:0%;
+    height:100%;
+    width:2px;
+    background-color:rgba(0,0,0,0.05);
+    z-index:-999;
+}
+.horizontalline{
+    position:absolute;
+    left:0%;
+    width:100%;
+    height:2px;
+    background-color:rgba(0,0,0,0.05);
+    z-index:-999;
+}
+#leftbar{
+    position:absolute;
+    left:0%;
+    height:80%;
+    width:20%;
+    top:20%;
+    background-color:rgb(250,250,250);
+}
+#topbar{
+    position:absolute;
+    left:0%;
+    height:20%;
+    width:100%;
+    top:0%;
+    background-color:rgb(250,250,250);
+}
+#map{
+    position:absolute;
+    left: 0%;
+    top:0%;
+    width:100%;
+    filter:saturate(50%);
+}
+#bar1{
+    position:absolute;
+    left:0%;
+    width:20%;
+    top:20%;
+    height:1px;
+    background-color:rgb(225,225,225);
+}
+#bar2{
+    position:absolute;
+    left:0%;
+    width:20%;
+    top:37%;
+    height:1px;
+    background-color:rgb(225,225,225);
+}
+#bar3{
+    position:absolute;
+    left:0%;
+    width:20%;
+    top:65%;
+    height:1px;
+    background-color:rgb(225,225,225);
+}
+#searchLabel{
+    position:absolute;
+    left:2%;
+    top:23%;
+    font-size:15px;
+    color:rgb(50,50,50);
+    font-weight:500;
+}
+#search{
+    position:absolute;
+    left:2%;
+    width:14.5%;
+    height:5%;
+    top:28%;
+    font-size:15px;
+    background-color:rgb(225,225,225);
+    color:rgb(50,50,50);
+    border-radius:30px;
+    border:none;
+    padding-left:10px;
+    transition:0.1s all;
+    font-family: "Instrument Sans", serif;
+}
+#search:focus{
+    filter:brightness(95%);
+    border:none;
+    outline:none;
+}
+#searchIcon{
+    position:absolute;
+    left:15%;
+    top:29%;
+    width:1.5%;
+}
+#selectedStreet{
+    position:absolute;
+    left:2%;
+    font-size:15px;
+    font-weight:500;
+    top:40%;
+}
+.dot{
+    position:absolute;
+    height:3px;
+    width:3px;
+    background-color:blue;
+}
