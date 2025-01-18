@@ -9,17 +9,23 @@
   </head>
   <body>
     <img src = "mountainview.png" id = "map" onclick = "detect(event)">
-    <div id = "topbar"></div>
     <div id = "leftbar"></div>
     <div id = "bar1"></div>
     <div id = "bar2"></div>
-    <div id = "bar3"></div>
-    <img src = "cpu.webp" id = "logo">
-    <div id = "title">transit.ai</div>
     <div id = "searchLabel">Find a City</div>
     <input type = "text" id = "search">
     <img src = "search.webp" id = "searchIcon">
     <div id = "selectedStreet">El Camino Real</div>
+    <img src = "highicon.png" id = "indicatorIcon">
+    <div id = "transitImportance">High</div>
+    <div id = "transitImportanceLabel">transit importance</div>
+    <div id = "peoplePerHour">People per Hour: <span style = "color:rgb(50,50,50)">High</span></div>
+    <div id = "carsPerHour">Cars per Hour: <span style = "color:rgb(50,50,50)">High</span></div>
+    <div id = "accessibility">Accessibility: <span style = "color:rgb(50,50,50)">1.3/5</span></div>
+    <div id = "timeSliderLabel">Time of Day</div>
+    <input type="range" min="8" max="22" value="12" id="timeSlider">
+    <div id = "timeSliderLabel1">8 AM</div>
+    <div id = "timeSliderLabel2">10 PM</div>
     <script src = "map.js"></script>
   </body>
 </html>
