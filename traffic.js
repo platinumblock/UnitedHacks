@@ -232,9 +232,6 @@ class Street {
     getTransitImportance(time) {
         let traffic = this.getCars(time) + this.getPedestrians(time);
         let maxTraffic = this.maxCars + this.maxPeople;
-        console.log(traffic + ", " + maxTraffic);
-        console.log(this.getCars(time));
-        console.log(this.getPedestrians(time));
         return 10 * traffic / maxTraffic;
     }
 
