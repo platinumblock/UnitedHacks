@@ -64,12 +64,10 @@ function updateDots() {
 }
 
 
-function detect(event) {
+function getStreet(x, y) {
     let canvas = document.getElementById("map");
     let width = canvas.width;
     let height = canvas.height;
-    let x = event.clientX;
-    let y = event.clientY;
 
     const delta = 15;
 
@@ -81,13 +79,25 @@ function detect(event) {
             let px = Math.round(point[0] / 1388 * width);
             let py = Math.round(point[1] / 750 * height);
             if (x >= px - delta && x <= px + delta && y >= py - delta && y <= py + delta) {
-                selectedStreet = street.street;
-                selectedStreetName = streetName;
-                updateStreet();
-                return;
+                return {name: streetName, obj: street.street};
             }
         }
     }
+    return null;
+}
+
+
+function detect(event) {
+    let x = event.clientX;
+    let y = event.clientY;
+
+    let streetInfo = getStreet(x, y);
+    if (streetInfo == null) {
+        return;
+    }
+    selectedStreet = streetInfo.obj
+    selectedStreetName = streetInfo.name;
+    updateStreet();
 }
 
 function updateStreet(){
@@ -105,7 +115,6 @@ function updateStreet(){
     document.getElementById("peoplePerHour").innerHTML = "People per Hour: <span style = 'color:rgb(50,50,50)'>" + selectedStreet.getPedestriansStr(time) + "</span>";
     document.getElementById("carsPerHour").innerHTML = "Cars per Hour: <span style = 'color:rgb(50,50,50)'>" + selectedStreet.getCarsStr(time) + "</span>";
     document.getElementById("accessibility").innerHTML = "Accessibility: <span style = 'color:rgb(50,50,50)'>" + selectedStreet.getAccessibilityStars(time) + "/5</span>";
-    updateDots();
 }
 
 function detectOverlay(event){
@@ -117,7 +126,20 @@ function detectOverlay(event){
     stop.style.left = (x - 18) + "px";
     stop.style.top = (y - 32) + "px";
     document.body.appendChild(stop);
+
+    let streetInfo = getStreet(x, y);
+    if (streetInfo == null) {
+        return;
+    }
+    let streetObj = streetInfo.obj;
+    selectedStreet = streetInfo.obj
+    selectedStreetName = streetInfo.name;
+    selectedStreet.addTransitStop();
+    updateStreet();
+    updateDots();
 }
+
+
 function changeEditing(){
     if(editing){
         editing = false;
@@ -136,6 +158,7 @@ function changeEditing(){
 
 function changeTime(event){
     time = new Date(Date.parse("2025-01-01T" + event.target.value + ":00:00"));
+    updateDots();
     updateStreet();
 }
 
