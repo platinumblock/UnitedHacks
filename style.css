@@ -69,6 +69,19 @@ body{
     top:7%;
     width:3%;
 }
+#logo2{
+    position:absolute;
+    left:95.5%;
+    top:2.5%;
+    width:3%;
+    z-index:1000;
+    opacity:0.8;
+    transition:0.1s all;
+}
+#logo2:hover{
+    transform:scale(1.05);
+    cursor:pointer;
+}
 #title{
     position:absolute;
     left:9%;
