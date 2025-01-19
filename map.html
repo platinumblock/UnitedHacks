@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <div id = "noMap">Enter a city to see its map.</div>
+    <div id = "noMap">Search a city to view the map.</div>
     <img src = "mountainview.png" id = "map" onclick = "detect(event)">
     <div id = "overlay" style = "display:none" onclick = "detectOverlay(event)"></div>
     <div id = "leftbar"></div>
@@ -29,9 +29,11 @@
     <div id = "timeSliderLabel2">22:00</div>
     <div id = "simulatearoute">Simulate a Route</div>
     <button onclick = "changeEditing()" id = "edit">✎&nbsp&nbspEdit</button>
+    <img onclick = "clearStops()" id = "clearStops" src = "trash.png">
     <div id = "accessibilityIncrease">↑ 0%</div>
     <div id = "accessibilityIncreaseLabel">accessibility change</div>
-    <div id = "noMap2"></div>
+    <div id = "stopsCover">Add stops to see impact.</div>
+    <div id = "noMap2">Search a city to see details.</div>
     <script src = "traffic.js"></script>
     <script src = "map.js"></script>
   </body>

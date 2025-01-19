@@ -34,12 +34,12 @@ function createDots() {
                 case "High":
                     dot.style["opacity"] = "1";
                     dot.style["background-color"] = "red";
-                    dot.style["border"] = "2px solid rgb(255, 207, 207)";
+                    dot.style["border"] = "0.16vw solid rgb(255, 207, 207)";
                     break;
                 case "Medium":
                     dot.style["opacity"] = "1";
                     dot.style["background-color"] = "orange";
-                    dot.style["border"] = "2px solid rgb(255, 229, 207)";
+                    dot.style["border"] = "0.16vw solid rgb(255, 229, 207)";
                     break;
                 case "Low":
                     dot.style["opacity"] = "0";
@@ -61,12 +61,12 @@ function updateDots() {
             case "High":
                 dot.style["opacity"] = "1";
                 dot.style["background-color"] = "red";
-                dot.style["border"] = "2px solid rgb(255, 207, 207)";
+                dot.style["border"] = "0.16vw solid rgb(255, 207, 207)";
                 break;
             case "Medium":
                 dot.style["opacity"] = "1";
                 dot.style["background-color"] = "orange";
-                dot.style["border"] = "2px solid rgb(255, 229, 207)";
+                dot.style["border"] = "0.16vw solid rgb(255, 229, 207)";
                 break;
             case "Low":
                 dot.style["opacity"] = "0";
@@ -115,8 +115,8 @@ function detect(event) {
 function updateStreet(){
     document.getElementById("noStreet").style.display = "none";
     var tI = selectedStreet.getTransitImportanceStr(time);
-    document.getElementById("selectedStreet").innerHTML = selectedStreetName + "&nbsp&nbsp&nbsp<span style = 'background-color:" + (tI == "High" ? "red" : (tI == "Medium" ? "orange" : "rgb(50, 206, 45)")) + ";padding:1px 4px 1px 4px;border-radius:50%;color:white;'>" + (tI == "High" ? "↑" : (tI == "Medium" ? "&nbsp&nbsp&nbsp&nbsp" : "↓")) + "</span>";
-    document.getElementById("transitImportance").innerHTML = tI + " <span style = 'color:rgb(50,50,50);font-size:15px;font-weight:400;'>transit importance</span>";
+    document.getElementById("selectedStreet").innerHTML = selectedStreetName + "&nbsp&nbsp&nbsp<span style = 'background-color:" + (tI == "High" ? "red" : (tI == "Medium" ? "orange" : "rgb(50, 206, 45)")) + ";padding:0.08vw 0.31vw 0.08vw 0.31vw;border-radius:50%;color:white;'>" + (tI == "High" ? "↑" : (tI == "Medium" ? "&nbsp&nbsp&nbsp&nbsp" : "↓")) + "</span>";
+    document.getElementById("transitImportance").innerHTML = tI + " <span style = 'color:rgb(50,50,50);font-size:1.17vw;font-weight:400;'>transit importance</span>";
     if(tI == "High"){
         document.getElementById("transitImportance").style.color = "red";
     }
@@ -145,6 +145,7 @@ function detectOverlay(event){
     if (streetInfo == null) {
         return;
     }
+    document.getElementById("stopsCover").style.display = "none";
     selectedStreet = streetInfo.obj
     selectedStreetName = streetInfo.name;
     var stopText = document.createElement("div");
@@ -158,11 +159,9 @@ function detectOverlay(event){
     let accessibilityDiff = (newAccessibility - oldAccessibility) / oldAccessibility * 5;
     let accessibilitySign = accessibilityDiff >= 0 ? "↑" : "↓";
     accessibilityDiff = Math.abs(Math.round(accessibilityDiff));
-
     let startingDiff = parseInt(document.getElementById("accessibilityIncrease").innerHTML.replace(/\D/g, ""));
-    console.log(startingDiff);
-    console.log(document.getElementById("accessibilityIncrease").innerHTML.replace(/\D/g, ""));
     document.getElementById("accessibilityIncrease").innerHTML = accessibilitySign + " " + (accessibilityDiff + startingDiff) + "%";
+    document.getElementById("accessibilityIncrease").style.color = "rgb(50, 206, 45)";
     updateStreet();
     updateDots();
 }
@@ -177,10 +176,16 @@ function clearStops() {
         let street = CITIES.mountainView[streetName];
         street.street.numTransitStops = 0;
     }
-
     if (selectedStreet != null) {
         updateStreet();
     }
+    document.getElementById("accessibilityIncrease").innerHTML = "↑ 0%";
+    document.getElementById("accessibilityIncrease").style.color = "rgb(50,50,50)";
+    var stopTexts = document.getElementsByClassName("stop");
+    while(stopTexts[0]){
+        stopTexts[0].remove();
+    }
+    document.getElementById("stopsCover").style.display = "flex";
     updateDots();
 }
 
