@@ -75,12 +75,10 @@ function updateDots() {
     }
 }
 
-function detect(event) {
+function getStreet(x, y) {
     let canvas = document.getElementById("map");
     let width = canvas.width;
     let height = canvas.height;
-    let x = event.clientX;
-    let y = event.clientY;
 
     const delta = 15;
 
@@ -92,13 +90,25 @@ function detect(event) {
             let px = Math.round(point[0] / 1388 * width);
             let py = Math.round(point[1] / 750 * height);
             if (x >= px - delta && x <= px + delta && y >= py - delta && y <= py + delta) {
-                selectedStreet = street.street;
-                selectedStreetName = streetName;
-                updateStreet();
-                return;
+                return {name: streetName, obj: street.street};
             }
         }
     }
+    return null;
+}
+
+
+function detect(event) {
+    let x = event.clientX;
+    let y = event.clientY;
+
+    let streetInfo = getStreet(x, y);
+    if (streetInfo == null) {
+        return;
+    }
+    selectedStreet = streetInfo.obj
+    selectedStreetName = streetInfo.name;
+    updateStreet();
 }
 
 function updateStreet(){
@@ -130,7 +140,39 @@ function detectOverlay(event){
     stop.style.left = (x - 18) + "px";
     stop.style.top = (y - 32) + "px";
     document.body.appendChild(stop);
+
+    let streetInfo = getStreet(x, y);
+    if (streetInfo == null) {
+        return;
+    }
+    let streetObj = streetInfo.obj;
+    selectedStreet = streetInfo.obj
+    selectedStreetName = streetInfo.name;
+    let oldAccessibility = selectedStreet.getInitialAccessibility(time);
+    selectedStreet.addTransitStop();
+    let newAccessibility = selectedStreet.getAccessibility(time);
+    let accessibilityDiff = (newAccessibility - oldAccessibility) / oldAccessibility * 5;
+    let accessibilitySign = accessibilityDiff >= 0 ? "↑" : "↓";
+    accessibilityDiff = Math.abs(Math.round(accessibilityDiff));
+    document.getElementById("accessibilityIncrease").innerHTML = accessibilitySign + accessibilityDiff + "%";
+    updateStreet();
+    updateDots();
 }
+
+function clearStops() {
+    let stops = document.getElementsByClassName("transitStop");
+
+    while(stops[0]) {
+        stops[0].parentNode.removeChild(stops[0]);
+    }
+
+    if (selectedStreet != null) {
+        updateStreet();
+    }
+    updateDots();
+}
+
+
 function changeEditing(){
     if(editing){
         editing = false;

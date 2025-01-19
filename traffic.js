@@ -216,6 +216,18 @@ class Street {
     }
 
 
+    /**
+     * The accessibility of the street between 0 and 1.
+     *
+     * @param time  the current time (a Date object).
+     *
+     * @return the street accesibility.
+     */
+    getInitialAccessibility(time) {
+        return 0.1 + 100 / (1 + this.getCars(time));
+    }
+
+
     getAccessibilityStars(time) {
         let accessibility = Math.max(0.0, Math.min(1.0, this.getAccessibility(time)));
         return Math.round(5 * accessibility);
