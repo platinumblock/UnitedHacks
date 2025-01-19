@@ -109,6 +109,12 @@ function detect(event) {
     selectedStreet = streetInfo.obj
     selectedStreetName = streetInfo.name;
     updateStreet();
+    let oldAccessibility = selectedStreet.getInitialAccessibility(time);
+    let newAccessibility = selectedStreet.getAccessibility(time);
+    let accessibilityDiff = (newAccessibility - oldAccessibility) / oldAccessibility * 5;
+    let accessibilitySign = accessibilityDiff >= 0 ? "↑" : "↓";
+    accessibilityDiff = Math.abs(Math.round(accessibilityDiff));
+    document.getElementById("accessibilityIncrease").innerHTML = accessibilitySign + accessibilityDiff + "%";
 }
 
 function updateStreet(){
