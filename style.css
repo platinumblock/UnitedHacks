@@ -10,7 +10,7 @@ body{
     top:21%;
     font-weight:700;
     font-size:80px;
-    background: linear-gradient(to right, rgb(46, 88, 255), #00bfff);
+    background: linear-gradient(to right, rgb(46, 88, 255), rgb(50, 206, 45));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -33,7 +33,7 @@ body{
 #explore{
     text-decoration:none;
     color:white;
-    background: linear-gradient(to right, rgb(46, 88, 255), #00bfff);
+    background: linear-gradient(to right, rgb(46, 88, 255), rgb(50, 206, 45));
     position:absolute;
     left:10%;
     top:70%;
@@ -78,7 +78,7 @@ body{
 }
 #maplink{
     position:absolute;
-    top:9.5%;
+    top:8.5%;
     left:87%;
     font-size:20px;
     color:rgb(50,50,50);
@@ -89,7 +89,7 @@ body{
     top:0%;
     height:100%;
     width:2px;
-    background-color:rgba(0,0,0,0.05);
+    background-color:rgba(0,0,0,0.03);
     z-index:-999;
 }
 .horizontalline{
@@ -97,8 +97,16 @@ body{
     left:0%;
     width:100%;
     height:2px;
-    background-color:rgba(0,0,0,0.05);
+    background-color:rgba(0,0,0,0.03);
     z-index:-999;
+}
+.dot{
+    position:absolute;
+    height:3px;
+    width:3px;
+    background-color:rgba(46, 88, 255,1);
+    border:2px solid rgb(207, 233, 255);
+    border-radius:50%;
 }
 #leftbar{
     position:absolute;
@@ -115,11 +123,20 @@ body{
     width:100%;
     filter:saturate(50%);
 }
+#overlay{
+    position:absolute;
+    left: 0%;
+    top:0%;
+    width:100%;
+    height:100%;
+    background-color:rgb(46, 88, 255);
+    opacity:0.1;
+}
 #bar1{
     position:absolute;
     left:0%;
     width:20%;
-    top:18%;
+    top:16%;
     height:1.5px;
     background-color:rgb(225,225,225);
 }
@@ -127,14 +144,14 @@ body{
     position:absolute;
     left:0%;
     width:20%;
-    top:65%;
+    top:61%;
     height:1.5px;
     background-color:rgb(225,225,225);
 }
 #searchLabel{
     position:absolute;
     left:2%;
-    top:4%;
+    top:2%;
     font-size:15px;
     color:rgb(50,50,50);
     font-weight:500;
@@ -144,7 +161,7 @@ body{
     left:2%;
     width:14.5%;
     height:5%;
-    top:9%;
+    top:7%;
     font-size:15px;
     background-color:rgb(225,225,225);
     color:rgb(50,50,50);
@@ -162,7 +179,7 @@ body{
 #searchIcon{
     position:absolute;
     left:15%;
-    top:10%;
+    top:8%;
     width:1.5%;
 }
 #selectedStreet{
@@ -170,25 +187,17 @@ body{
     left:2%;
     font-size:15px;
     font-weight:500;
-    top:23%;
+    top:19%;
 }
 #indicatorIcon{
-    position:absolute;
-    left:11%;
-    top:23%;
-    width:1.5%;
-}
-.dot{
-    position:absolute;
-    height:3px;
-    width:3px;
+    width:16px;
 }
 #transitImportance{
     font-size:18px;
     color:red;
     position:absolute;
     left:2%;
-    top:28%;
+    top:24%;
     font-weight:700;
 }
 #transitImportanceLabel{
@@ -196,33 +205,33 @@ body{
     color:rgb(50,50,50);
     position:absolute;
     left:5.5%;
-    top:28.5%;
+    top:24.5%;
 }
 #peoplePerHour{
     position:absolute;
     left:2%;
     color:rgb(150,150,150);
     font-size:15px;
-    top:36%;
+    top:32%;
 }
 #carsPerHour{
     position:absolute;
     left:2%;
     color:rgb(150,150,150);
     font-size:15px;
-    top:40%;
+    top:36%;
 }
 #accessibility{
     position:absolute;
     left:2%;
     color:rgb(150,150,150);
     font-size:15px;
-    top:44%;
+    top:40%;
 }
 #timeSliderLabel{
     position:absolute;
     left:2%;
-    top:50%;
+    top:46%;
     font-size:15px;
     color:rgb(50,50,50);
 }
@@ -237,13 +246,13 @@ body{
 }
 #timeSlider::-webkit-slider-thumb:hover{
     cursor:pointer;
-    filter:brightness(95%);
+    transform:scale(1.05);
 }
 #timeSlider{
     position:absolute;
     left:2%;
     width:15.5%;
-    top:55%;
+    top:51%;
     outline:none;
     -webkit-appearance: none;
     background-color:rgb(225,225,225);
@@ -253,14 +262,69 @@ body{
 #timeSliderLabel1{
     position:absolute;
     left:2%;
-    top:58%;
+    top:54%;
     color:rgb(150,150,150);
     font-size:13px;
 }
 #timeSliderLabel2{
     position:absolute;
     left: 15%;
-    top:58%;
+    top:54%;
     color:rgb(150,150,150);
     font-size:13px;
+}
+#simulatearoute{
+    position:absolute;
+    left:2%;
+    top:64%;
+    font-weight:500;
+    font-size:15px;
+    color:rgb(50,50,50);
+}
+#edit{
+    position:absolute;
+    left:12%;
+    width:4.5%;
+    height:4%;
+    top:63.7%;
+    font-family: "Instrument Sans", serif;
+    font-size:12px;
+    font-weight:500;
+    background-color:rgb(46, 88, 255);
+    color:white;
+    border:none;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:10px;
+    transition:0.1s all;
+}
+#edit:hover{
+    transform:scale(1.05);
+    cursor:pointer;
+}
+.stop{
+    position:absolute;
+    left:2%;
+    color:rgb(150,150,150);
+    font-size:15px;
+}
+#accessibilityIncrease{
+    font-size:18px;
+    color:rgb(50, 206, 45);
+    position:absolute;
+    left:2%;
+    top:69%;
+    font-weight:700;
+}
+#accessibilityIncreaseLabel{
+    font-size:15px;
+    color:rgb(50,50,50);
+    position:absolute;
+    left:6.5%;
+    top:69.5%;
+}
+.transitStop{
+    position:absolute;
+    width:3%;
 }

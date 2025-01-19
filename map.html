@@ -9,23 +9,27 @@
   </head>
   <body>
     <img src = "mountainview.png" id = "map" onclick = "detect(event)">
+    <div id = "overlay" style = "display:none" onclick = "detectOverlay(event)"></div>
     <div id = "leftbar"></div>
     <div id = "bar1"></div>
     <div id = "bar2"></div>
     <div id = "searchLabel">Find a City</div>
     <input type = "text" id = "search">
     <img src = "search.webp" id = "searchIcon">
-    <div id = "selectedStreet">El Camino Real</div>
-    <img src = "highicon.png" id = "indicatorIcon">
-    <div id = "transitImportance">High</div>
-    <div id = "transitImportanceLabel">transit importance</div>
+    <div id = "selectedStreet">El Camino Real <img src = "highicon.png" id = "indicatorIcon"></div>
+    <div id = "transitImportance">High <span style = "color:rgb(50,50,50);font-size:15px;font-weight:400;">transit importance</span></div>
     <div id = "peoplePerHour">People per Hour: <span style = "color:rgb(50,50,50)">High</span></div>
     <div id = "carsPerHour">Cars per Hour: <span style = "color:rgb(50,50,50)">High</span></div>
     <div id = "accessibility">Accessibility: <span style = "color:rgb(50,50,50)">1.3/5</span></div>
     <div id = "timeSliderLabel">Time of Day</div>
-    <input type="range" min="8" max="22" value="12" id="timeSlider">
+    <input type="range" min="8" max="22" value="12" id="timeSlider" onchange = "changeTime(event)">
     <div id = "timeSliderLabel1">8 AM</div>
     <div id = "timeSliderLabel2">10 PM</div>
+    <div id = "simulatearoute">Simulate a Route</div>
+    <button onclick = "changeEditing()" id = "edit">✎&nbsp&nbspEdit</button>
+    <div id = "accessibilityIncrease">↑ 23%</div>
+    <div id = "accessibilityIncreaseLabel">accessibility change</div>
+    <div class = "stop" style = "top:77%">Stop 1&nbsp • • • • &nbsp<span style = "color:rgb(50,50,50)">El Camino Real</span></div>
     <script src = "traffic.js"></script>
     <script src = "map.js"></script>
   </body>
