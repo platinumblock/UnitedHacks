@@ -157,10 +157,10 @@ class Street {
 
     getPedestriansStr(time) {
         let pedestrians = this.getPedestrians(time);
-        if (pedestrians >= 1000) {
+        if (pedestrians >= 50) {
             return "High";
         }
-        else if (pedestrians >= 500) {
+        else if (pedestrians >= 20) {
             return "Medium";
         }
         else {
@@ -192,10 +192,10 @@ class Street {
 
     getCarsStr(time) {
         let cars = this.getCars(time);
-        if (cars >= 1000) {
+        if (cars >= 500) {
             return "High";
         }
-        else if (cars >= 500) {
+        else if (cars >= 250) {
             return "Medium";
         }
         else {
@@ -212,7 +212,7 @@ class Street {
      * @return the street accesibility.
      */
     getAccessibility(time) {
-        return 0.1 + 100 * this.numTransitStops / this.getCars(time);
+        return 0.1 + 100 * (1 + this.numTransitStops) / (1 + this.getCars(time));
     }
 
 
@@ -259,7 +259,7 @@ class Street {
 const CITIES = {
     mountainView: {
         "El Camino Real": {
-            street: new Street(35, 6, false, 1.75, false, 2, false,  1250, 10000, [6, 7, 8, 9, 11, 12, 13, 17, 18, 19, 20, 21, 22]),
+            street: new Street(35, 6, false, 1.75, false, 2, false,  1250, 10000, [4, 5, 6, 7, 8, 9, 11, 12, 13, 17, 18, 19, 20, 21, 22]),
             points: [
                 [1384, 688],
                 [1371, 681],

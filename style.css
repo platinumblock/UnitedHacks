@@ -102,8 +102,8 @@ body{
 }
 .dot{
     position:absolute;
-    height:3px;
-    width:3px;
+    height:5px;
+    width:5px;
     background-color:rgba(46, 88, 255,1);
     border:2px solid rgb(207, 233, 255);
     border-radius:50%;

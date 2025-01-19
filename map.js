@@ -1,11 +1,15 @@
 var editing = false;
+var selectedStreet = null;
+var selectedStreetName = null;
+var time = new Date(Date.parse("2025-01-01T" + 12 + ":00:00"));
 
-function drawDots() {
+function createDots() {
     let canvas = document.getElementById("map");
     let width = canvas.width;
     let height = canvas.height;
     for (let streetName in CITIES.mountainView) {
         let street = CITIES.mountainView[streetName];
+        let importance = street.street.getTransitImportanceStr(time);
         let points = street.points;
         for (let i = 0; i < points.length; i++) {
             let point = points[i];
@@ -14,15 +18,52 @@ function drawDots() {
 
             let dot = document.createElement("div");
             dot.classList.add("dot");
+            dot.classList.add(streetName.replace(/ /g, "_"));
             dot.style.left = px + "px";
             dot.style.top = py + "px";
+            switch (importance) {
+            case "High":
+                dot.style["opacity"] = "1";
+                dot.style["background-color"] = "red";
+                break;
+            case "Medium":
+                dot.style["opacity"] = "1";
+                dot.style["background-color"] = "orange";
+                break;
+            case "Low":
+                dot.style["opacity"] = "0";
+                break;
+            }
             document.body.appendChild(dot);
         }
     }
 }
-var selectedStreet = null;
-var selectedStreetName = null;
-var time = new Date(Date.parse("2025-01-01T" + 12 + ":00:00"));
+
+function updateDots() {
+    for (let streetName in CITIES.mountainView) {
+        let street = CITIES.mountainView[streetName];
+        let importance = street.street.getTransitImportanceStr(time);
+        let dots = document.getElementsByClassName(streetName.replace(/ /g, "_"));
+        for (let i = 0; i < dots.length; i++) {
+            let dot = dots[i];
+            switch (importance) {
+            case "High":
+                dot.style["opacity"] = "1";
+                dot.style["background-color"] = "red";
+                break;
+            case "Medium":
+                dot.style["opacity"] = "1";
+                dot.style["background-color"] = "orange";
+                break;
+            case "Low":
+                dot.style["opacity"] = "0";
+                break;
+            }
+        }
+    }
+}
+
+
 function detect(event) {
     let canvas = document.getElementById("map");
     let width = canvas.width;
@@ -64,6 +105,7 @@ function updateStreet(){
     document.getElementById("peoplePerHour").innerHTML = "People per Hour: <span style = 'color:rgb(50,50,50)'>" + selectedStreet.getPedestriansStr(time) + "</span>";
     document.getElementById("carsPerHour").innerHTML = "Cars per Hour: <span style = 'color:rgb(50,50,50)'>" + selectedStreet.getCarsStr(time) + "</span>";
     document.getElementById("accessibility").innerHTML = "Accessibility: <span style = 'color:rgb(50,50,50)'>" + selectedStreet.getAccessibilityStars(time) + "/5</span>";
+    updateDots();
 }
 
 function detectOverlay(event){
@@ -97,4 +139,4 @@ function changeTime(event){
     updateStreet();
 }
 
-drawDots();
+createDots();
