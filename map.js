@@ -11,6 +11,7 @@ function searchCity(event){
         }, 1000);
     }
 }
+
 function createDots() {
     let canvas = document.getElementById("map");
     let width = canvas.width;
@@ -114,7 +115,7 @@ function detect(event) {
     let accessibilityDiff = (newAccessibility - oldAccessibility) / oldAccessibility * 5;
     let accessibilitySign = accessibilityDiff >= 0 ? "↑" : "↓";
     accessibilityDiff = Math.abs(Math.round(accessibilityDiff));
-    document.getElementById("accessibilityIncrease").innerHTML = accessibilitySign + accessibilityDiff + "%";
+    document.getElementById("accessibilityIncrease").innerHTML = accessibilitySign + " " + accessibilityDiff + "%";
 }
 
 function updateStreet(){
@@ -134,10 +135,10 @@ function updateStreet(){
     document.getElementById("peoplePerHour").innerHTML = "People per Hour: <span style = 'color:rgb(50,50,50)'>" + selectedStreet.getPedestriansStr(time) + "</span>";
     document.getElementById("carsPerHour").innerHTML = "Cars per Hour: <span style = 'color:rgb(50,50,50)'>" + selectedStreet.getCarsStr(time) + "</span>";
     document.getElementById("accessibility").innerHTML = "Accessibility: <span style = 'color:rgb(50,50,50)'>" + selectedStreet.getAccessibilityStars(time) + "/5</span>";
-    updateDots();
 }
 
 function detectOverlay(event){
+    var stops = document.getElementsByClassName("transitStop").length;
     var x = event.clientX;
     var y = event.clientY;
     var stop = document.createElement("img");
@@ -146,21 +147,24 @@ function detectOverlay(event){
     stop.style.left = (x - 18) + "px";
     stop.style.top = (y - 32) + "px";
     document.body.appendChild(stop);
-
     let streetInfo = getStreet(x, y);
     if (streetInfo == null) {
         return;
     }
-    let streetObj = streetInfo.obj;
     selectedStreet = streetInfo.obj
     selectedStreetName = streetInfo.name;
+    var stopText = document.createElement("div");
+    stopText.classList.add("stop");
+    stopText.style.top = (77 + stops * 5) + "%";
+    stopText.innerHTML = "Stop " + (stops + 1) + "&nbsp • • • • &nbsp<span style = 'color:rgb(50,50,50)'>" + selectedStreetName + "</span>";
+    document.body.appendChild(stopText);
     let oldAccessibility = selectedStreet.getInitialAccessibility(time);
     selectedStreet.addTransitStop();
     let newAccessibility = selectedStreet.getAccessibility(time);
     let accessibilityDiff = (newAccessibility - oldAccessibility) / oldAccessibility * 5;
     let accessibilitySign = accessibilityDiff >= 0 ? "↑" : "↓";
     accessibilityDiff = Math.abs(Math.round(accessibilityDiff));
-    document.getElementById("accessibilityIncrease").innerHTML = accessibilitySign + accessibilityDiff + "%";
+    document.getElementById("accessibilityIncrease").innerHTML = accessibilitySign + " " + accessibilityDiff + "%";
     updateStreet();
     updateDots();
 }
@@ -177,7 +181,6 @@ function clearStops() {
     }
     updateDots();
 }
-
 
 function changeEditing(){
     if(editing){
