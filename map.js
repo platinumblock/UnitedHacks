@@ -173,6 +173,10 @@ function clearStops() {
     while(stops[0]) {
         stops[0].parentNode.removeChild(stops[0]);
     }
+    for (let streetName in CITIES.mountainView) {
+        let street = CITIES.mountainView[streetName];
+        street.street.numTransitStops = 0;
+    }
 
     if (selectedStreet != null) {
         updateStreet();
