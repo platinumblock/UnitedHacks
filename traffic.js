@@ -247,7 +247,7 @@ class Street {
         //console.log(traffic + ", " + maxTraffic);
         //console.log(this.getCars(time));
         //console.log(this.getPedestrians(time));
-        return 10 * traffic / maxTraffic;
+        return Math.max(0, 10 * traffic / maxTraffic - 0.1 * this.numTransitStops);
     }
 
 
