@@ -258,7 +258,7 @@ class Street {
 
 const CITIES = {
     mountainView: {
-        elCamino: {
+        "El Camino": {
             street: new Street(35, 6, false, 1.75, false, 2, false,  1250, 10000, [6, 7, 8, 9, 11, 12, 13, 17, 18, 19, 20, 21, 22]),
             points: [
                 [1384, 688],
@@ -330,7 +330,7 @@ const CITIES = {
                 [285, 4]
             ]
         },
-        castro: {
+        "Castro": {
             street: new Street(30, 4, false, 2, true,  2, false, 4000, 5000, [8, 11, 12, 17, 18, 21, 22, 23]),
             points: [
                 [620, 647],
@@ -374,7 +374,7 @@ const CITIES = {
                 [942, 4]
             ]
         },
-        miramonte: {
+        "Miramonte": {
             street: new Street(35, 5, false, 1.5, false, 2, false, 1000, 7000, [7, 8, 11, 12, 13, 17, 18]),
             points: [
                 [621, 730],
@@ -420,7 +420,7 @@ const CITIES = {
                 [634, 9]
             ]
         },
-        calderon: {
+        "Calderon": {
             street: new Street(30, 3, false, 2, false, 2, false, 1500, 6000, [7, 8, 12, 13, 17, 18]),
             points: [
                 [1124, 741],
@@ -464,7 +464,7 @@ const CITIES = {
                 [1378, 79]
             ]
         },
-        church: {
+        "Church": {
             street: new Street(30, 3, false, 2, false, 2, false, 1500, 6000, [7, 8, 12, 13, 17, 18]),
             points: [
                 [655, 10], 
@@ -510,7 +510,7 @@ const CITIES = {
                 [1380, 457]
             ]
         },
-        view: {
+        "View": {
             street: new Street(25, 3, false, 2, false, 2, false, 1500, 6000, [7, 8, 12, 13, 17, 18]),
             points: [
                 [913, 372], 

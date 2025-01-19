@@ -5,7 +5,6 @@ function drawDots() {
 
     for (let streetName in CITIES.mountainView) {
         let street = CITIES.mountainView[streetName];
-        console.log(streetName + ": " + street.street.getTransitImportanceStr(new Date()));
         let points = street.points;
         for (let i = 0; i < points.length; i++) {
             let point = points[i];
@@ -38,6 +37,7 @@ function detect(event) {
             let px = Math.round(point[0] / 1388 * width);
             let py = Math.round(point[1] / 750 * height);
             if (x >= px - delta && x <= px + delta && y >= py - delta && y <= py + delta) {
+                console.log(streetName);
                 return street;
             }
         }
